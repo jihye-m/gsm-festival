@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="images/png" href="images/logo1.png">
+    <link rel="stylesheet" href="css/style.css">
+    <title>GSM MOU WEB</title>
+</head>
+<body>
+    <div id="home" class="back">
+        <header class="page-header wrapper">
+            <h1><a href="index.html"><img class="logo" src="images/logo.png"></a></h1>
+            <nav>
+                <ul class="main-nav">
+                  <li><a href="index.html">메인</a></li>
+                  <li><a href="company.html">기업</a></li>
+                  <li><a href="hire.html">채용</a></li>
+                </ul>
+              </nav>
+        </header>
+        <div id="menubar">
+            <h1>기업</h1>
+            <ul>
+                <li><a href="#none">기업 소개</a>
+                    <ul>
+                        <li><a href="#none">분야</a></li>
+                        <ul>
+                            <li><a href="#none">SW</a></li>
+                            <li><a href="#none">임베디드 SW</a></li>
+                        </ul>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <script>
+            /* lnb */
+            (function($){
+            
+            var lnbUI = {
+                click : function (target, speed) {
+                var _self = this,
+                    $target = $(target);
+                _self.speed = speed || 300;
+                
+                $target.each(function(){
+                    if(findChildren($(this))) {
+                    return;
+                    }
+                    $(this).addClass('noDepth');
+                });
+                
+                function findChildren(obj) {
+                    return obj.find('> ul').length > 0;
+                }
+                
+                $target.on('click','a', function(e){
+                    e.stopPropagation();
+                    var $this = $(this),
+                        $depthTarget = $this.next(),
+                        $siblings = $this.parent().siblings();
+                    
+                    $this.parent('li').find('ul li').removeClass('on');
+                    $siblings.removeClass('on');
+                    $siblings.find('ul').slideUp(250);
+                    
+                    if($depthTarget.css('display') == 'none') {
+                    _self.activeOn($this);
+                    $depthTarget.slideDown(_self.speed);
+                    } else {
+                    $depthTarget.slideUp(_self.speed);
+                    _self.activeOff($this);
+                    }
+                    
+                })
+                
+                },
+                activeOff : function($target) {
+                $target.parent().removeClass('on');
+                },
+                activeOn : function($target) {
+                $target.parent().addClass('on');
+                }
+            };
+            
+            
+            // Call lnbUI
+            $(function(){
+                lnbUI.click('#lnb li', 300)
+            });
+            
+            
+            }(jQuery))
+        </script>
+    </div>
+</body>
+</html>
